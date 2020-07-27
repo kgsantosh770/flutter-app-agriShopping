@@ -1,0 +1,73 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter clean
+
+## exception
+
+FileSystemException: FileSystemException: Failed to decode data using encoding 'utf-8', path = 'E:\Agri Power\mobileapplication\agri_shopping\pubspec.yaml'
+
+```
+#0      _File._tryDecode (dart:io/file_impl.dart:574:7)
+#1      _File.readAsStringSync (dart:io/file_impl.dart:594:7)
+#2      ForwardingFile.readAsStringSync (package:file/src/forwarding/forwarding_file.dart:103:16)
+#3      ForwardingFile.readAsStringSync (package:file/src/forwarding/forwarding_file.dart:103:16)
+#4      FlutterManifest.createFromPath (package:flutter_tools/src/flutter_manifest.dart:33:51)
+#5      FlutterProject._readManifest (package:flutter_tools/src/project.dart:193:34)
+#6      FlutterProjectFactory.fromDirectory.<anonymous closure> (package:flutter_tools/src/project.dart:38:55)
+#7      _LinkedHashMapMixin.putIfAbsent (dart:collection-patch/compact_hash.dart:293:23)
+#8      FlutterProjectFactory.fromDirectory (package:flutter_tools/src/project.dart:37:21)
+#9      FlutterProject.fromDirectory (package:flutter_tools/src/project.dart:69:86)
+#10     FlutterProject.current (package:flutter_tools/src/project.dart:73:38)
+#11     CleanCommand.runCommand (package:flutter_tools/src/commands/clean.dart:39:58)
+#12     FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:723:18)
+#13     _rootRunUnary (dart:async/zone.dart:1192:38)
+#14     _CustomZone.runUnary (dart:async/zone.dart:1085:19)
+#15     _FutureListener.handleValue (dart:async/future_impl.dart:141:18)
+#16     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:682:45)
+#17     Future._propagateToListeners (dart:async/future_impl.dart:711:32)
+#18     Future._completeWithValue (dart:async/future_impl.dart:526:5)
+#19     Future._asyncComplete.<anonymous closure> (dart:async/future_impl.dart:556:7)
+#20     _rootRun (dart:async/zone.dart:1184:13)
+#21     _CustomZone.run (dart:async/zone.dart:1077:19)
+#22     _CustomZone.runGuarded (dart:async/zone.dart:979:7)
+#23     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:1019:23)
+#24     _microtaskLoop (dart:async/schedule_microtask.dart:43:21)
+#25     _startMicrotaskLoop (dart:async/schedule_microtask.dart:52:5)
+#26     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:118:13)
+#27     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:169:5)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, v1.17.3, on Microsoft Windows [Version 10.0.18363.900], locale
+    en-IN)
+    • Flutter version 1.17.3 at C:\src\flutter_windows_v1.12.13+hotfix.9-stable\flutter
+    • Framework revision b041144f83 (4 weeks ago), 2020-06-04 09:26:11 -0700
+    • Engine revision ee76268252
+    • Dart version 2.8.4
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.2)
+    • Android SDK at C:\Users\santosh\AppData\Local\Android\sdk
+    • Platform android-29, build-tools 29.0.2
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+    • All Android licenses accepted.
+
+[!] Android Studio (version 3.5)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    ✗ Flutter plugin not installed; this adds Flutter specific functionality.
+    ✗ Dart plugin not installed; this adds Dart specific functionality.
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+
+[✓] VS Code (version 1.46.1)
+    • VS Code at C:\Users\santosh\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.12.1
+
+[✓] Connected device (1 available)
+    • ONEPLUS A5000 • emulator-5554 • android-x86 • Android 7.1.1 (API 25)
+
+! Doctor found issues in 1 category.
+```

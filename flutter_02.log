@@ -1,0 +1,107 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter pub get
+
+## exception
+
+FileSystemException: FileSystemException: Failed to decode data using encoding 'utf-8', path = 'E:\Agri Power\mobileapplication\agri_shopping\pubspec.yaml'
+
+```
+#0      _File._tryDecode (dart:io/file_impl.dart:574:7)
+#1      _File.readAsStringSync (dart:io/file_impl.dart:594:7)
+#2      ForwardingFile.readAsStringSync (package:file/src/forwarding/forwarding_file.dart:103:16)
+#3      ForwardingFile.readAsStringSync (package:file/src/forwarding/forwarding_file.dart:103:16)
+#4      FlutterManifest.createFromPath (package:flutter_tools/src/flutter_manifest.dart:33:51)
+#5      FlutterProject._readManifest (package:flutter_tools/src/project.dart:193:34)
+#6      FlutterProjectFactory.fromDirectory.<anonymous closure> (package:flutter_tools/src/project.dart:38:55)
+#7      _LinkedHashMapMixin.putIfAbsent (dart:collection-patch/compact_hash.dart:293:23)
+#8      FlutterProjectFactory.fromDirectory (package:flutter_tools/src/project.dart:37:21)
+#9      FlutterProject.fromDirectory (package:flutter_tools/src/project.dart:69:86)
+#10     FlutterProject.fromPath (package:flutter_tools/src/project.dart:77:50)
+#11     PackagesGetCommand.usageValues (package:flutter_tools/src/commands/packages.dart:78:55)
+#12     FlutterCommand.verifyThenRunCommand (package:flutter_tools/src/runner/flutter_command.dart:716:21)
+<asynchronous suspension>
+#13     FlutterCommand.run.<anonymous closure> (package:flutter_tools/src/runner/flutter_command.dart:620:33)
+<asynchronous suspension>
+#14     FlutterCommand.run.<anonymous closure> (package:flutter_tools/src/runner/flutter_command.dart)
+#15     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:150:29)
+#16     _rootRun (dart:async/zone.dart:1184:13)
+#17     _CustomZone.run (dart:async/zone.dart:1077:19)
+#18     _runZoned (dart:async/zone.dart:1619:10)
+#19     runZoned (dart:async/zone.dart:1539:10)
+#20     AppContext.run (package:flutter_tools/src/base/context.dart:149:18)
+#21     FlutterCommand.run (package:flutter_tools/src/runner/flutter_command.dart:610:20)
+#22     CommandRunner.runCommand (package:args/command_runner.dart:197:27)
+#23     FlutterCommandRunner.runCommand.<anonymous closure> (package:flutter_tools/src/runner/flutter_command_runner.dart:339:21)
+<asynchronous suspension>
+#24     FlutterCommandRunner.runCommand.<anonymous closure> (package:flutter_tools/src/runner/flutter_command_runner.dart)
+#25     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:150:29)
+#26     _rootRun (dart:async/zone.dart:1184:13)
+#27     _CustomZone.run (dart:async/zone.dart:1077:19)
+#28     _runZoned (dart:async/zone.dart:1619:10)
+#29     runZoned (dart:async/zone.dart:1539:10)
+#30     AppContext.run (package:flutter_tools/src/base/context.dart:149:18)
+#31     FlutterCommandRunner.runCommand (package:flutter_tools/src/runner/flutter_command_runner.dart:288:19)
+#32     CommandRunner.run.<anonymous closure> (package:args/command_runner.dart:112:25)
+#33     new Future.sync (dart:async/future.dart:224:31)
+#34     CommandRunner.run (package:args/command_runner.dart:112:14)
+#35     FlutterCommandRunner.run (package:flutter_tools/src/runner/flutter_command_runner.dart:231:18)
+#36     run.<anonymous closure>.<anonymous closure> (package:flutter_tools/runner.dart:63:22)
+#37     _rootRun (dart:async/zone.dart:1184:13)
+#38     _CustomZone.run (dart:async/zone.dart:1077:19)
+#39     _runZoned (dart:async/zone.dart:1619:10)
+#40     runZonedGuarded (dart:async/zone.dart:1608:12)
+#41     runZoned (dart:async/zone.dart:1536:12)
+#42     run.<anonymous closure> (package:flutter_tools/runner.dart:61:18)
+<asynchronous suspension>
+#43     run.<anonymous closure> (package:flutter_tools/runner.dart)
+#44     runInContext.runnerWrapper (package:flutter_tools/src/context_runner.dart:64:18)
+<asynchronous suspension>
+#45     runInContext.runnerWrapper (package:flutter_tools/src/context_runner.dart)
+#46     AppContext.run.<anonymous closure> (package:flutter_tools/src/base/context.dart:150:29)
+#47     _rootRun (dart:async/zone.dart:1184:13)
+#48     _CustomZone.run (dart:async/zone.dart:1077:19)
+#49     _runZoned (dart:async/zone.dart:1619:10)
+#50     runZoned (dart:async/zone.dart:1539:10)
+#51     AppContext.run (package:flutter_tools/src/base/context.dart:149:18)
+#52     runInContext (package:flutter_tools/src/context_runner.dart:67:24)
+#53     run (package:flutter_tools/runner.dart:48:10)
+#54     main (package:flutter_tools/executable.dart:69:9)
+#55     main (file:///C:/src/flutter_windows_v1.12.13+hotfix.9-stable/flutter/packages/flutter_tools/bin/flutter_tools.dart:8:3)
+#56     _startIsolate.<anonymous closure> (dart:isolate-patch/isolate_patch.dart:299:32)
+#57     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:168:12)
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, v1.17.3, on Microsoft Windows [Version 10.0.18363.900], locale en-IN)
+    • Flutter version 1.17.3 at C:\src\flutter_windows_v1.12.13+hotfix.9-stable\flutter
+    • Framework revision b041144f83 (4 weeks ago), 2020-06-04 09:26:11 -0700
+    • Engine revision ee76268252
+    • Dart version 2.8.4
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.2)
+    • Android SDK at C:\Users\santosh\AppData\Local\Android\sdk
+    • Platform android-29, build-tools 29.0.2
+    • Java binary at: C:\Program Files\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+    • All Android licenses accepted.
+
+[!] Android Studio (version 3.5)
+    • Android Studio at C:\Program Files\Android\Android Studio
+    ✗ Flutter plugin not installed; this adds Flutter specific functionality.
+    ✗ Dart plugin not installed; this adds Dart specific functionality.
+    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b03)
+
+[✓] VS Code (version 1.46.1)
+    • VS Code at C:\Users\santosh\AppData\Local\Programs\Microsoft VS Code
+    • Flutter extension version 3.12.1
+
+[✓] Connected device (1 available)
+    • ONEPLUS A5000 • emulator-5554 • android-x86 • Android 7.1.1 (API 25)
+
+! Doctor found issues in 1 category.
+```
