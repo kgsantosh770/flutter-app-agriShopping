@@ -9,6 +9,10 @@ A mobile application created using **Flutter**.
 
 To connect farmers and civilians with a single intermediate, for the purpose of providing reasonable price for their productions.
 
+<h2>Note:</h2>
+
+  You can't run this project, because I have'nt provided all the files to this repository.If you are interested in this project, contact me.
+  Mobile: +918825840570
 
 <h2>UI Samples:</h2>
 <img height=670 width=350 alt="signin screen" src="/Ui samples/2. Sign in.png"/>
