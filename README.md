@@ -1,9 +1,5 @@
 <html>
 
-<head>
-
-</head>
-
 <body>
 #MobileApplication
 
