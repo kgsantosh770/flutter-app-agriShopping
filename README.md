@@ -1,24 +1,7 @@
 <html>
 
 <head>
-<style>
-* {
-  box-sizing: border-box;
-}
 
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 5px;
-}
-
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-</style>
 </head>
 
 <body>
@@ -32,14 +15,9 @@ To connect farmers and civilians with a single intermediate, for the purpose of 
 
 <h2>UI Samples:</h2>
 
-<div class="row">
-  <div class="column">
-    <img height=670 width=350 alt="signin screen" src="/Ui samples/2. Sign in.png"/> 
-  </div>
-  <div class="column">
-    <img height=670 width=350 alt="home screen" src="/Ui samples/3. Home Screen.png"/>
-  </div>
-</div>
+ -<img height=670 width=350 alt="signin screen" src="/Ui samples/2. Sign in.png"/> 
+ -<img height=670 width=350 alt="home screen" src="/Ui samples/3. Home Screen.png"/>
+ 
 
 <br>
 
