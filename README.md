@@ -8,6 +8,13 @@ A mobile application created using <b>Flutter</b>.
 To connect farmers and civilians with a single intermediate, for the purpose of providing reasonable price for their productions.
 
 
+<h2>UI Samples:</h2>
+
+<img height=670 width=350 src="/Ui samples/2. Sign in.png"/> 
+<img height=670 width=350 src="/Ui samples/3. Home Screen.png"/>
+
+<br>
+
 <h2>Team Members:</h2> 
 
 <ul>
@@ -18,12 +25,6 @@ To connect farmers and civilians with a single intermediate, for the purpose of 
 	<li>Sidhart</li>
 </ul>	
 
-<h2>UI Samples:</h2>
-
-<img height=700 width=350 src="/Ui samples/2. Sign in.png"/>
-<br>
-<img height=700 width=350 src="/Ui samples/3. Home Screen.png"/>
-<br>
 
 </body>
 </html>
