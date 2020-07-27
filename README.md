@@ -5,23 +5,23 @@
 
 A mobile application created using **Flutter**.
 
-##Motive:
+<h2>Motive:</h2>
 
 To connect farmers and civilians with a single intermediate, for the purpose of providing reasonable price for their productions.
 
 
-##UI Samples:
+<h2>UI Samples:</h2>
 
   <img height=670 width=350 alt="signin screen" src="/Ui samples/2. Sign in.png"/> 
   <img height=670 width=350 alt="home screen" src="/Ui samples/3. Home Screen.png"/>
  
 
 
-##Firebase Integration:
+<h2>Firebase Integration:</h2>
 
   This application is integrated with cloud firestore (firebase). Every data of the application is stored in the real time database in cloud firestore. User authentication is also dealt with firebase authentication.
 
-##Team Members:
+<h2>Team Members:</h2>
 
 <ul>
 	<li>Santosh</li>
