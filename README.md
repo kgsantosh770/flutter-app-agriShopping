@@ -20,9 +20,10 @@ To connect farmers and civilians with a single intermediate, for the purpose of 
 
 <h2>UI Samples:</h2>
 
-<img src="/Ui samples/2. Sign in.png"/>
+<img height=200 width=200 src="/Ui samples/2. Sign in.png"/>
 <br>
 <img src="/Ui samples/3. Home Screen.png"/>
+<br>
 
 </body>
 </html>
