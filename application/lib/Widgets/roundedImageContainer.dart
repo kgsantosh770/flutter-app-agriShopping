@@ -7,9 +7,10 @@ class RoundedImageContainer extends StatelessWidget {
   const RoundedImageContainer({
     Key key,
     @required this.image,
-    @required this.itemName,
-    @required this.itemPrice,
-    @required this.itemQuantity,
+    this.itemName,
+    this.itemPrice,
+    this.discount,
+    this.itemQuantity,
     this.isNetworkImage = true,
     this.imageHeight = .17,
     this.imageWidth = .4,
@@ -19,7 +20,8 @@ class RoundedImageContainer extends StatelessWidget {
   final bool isNetworkImage;
   final String image;
   final String itemName;
-  final dynamic itemPrice;
+  final itemPrice;
+  final discount;
   final String itemQuantity;
   final double imageHeight;
   final double imageWidth;
@@ -32,12 +34,11 @@ class RoundedImageContainer extends StatelessWidget {
     final TextStyle textStyle = TextStyle(
         color: blackColor, fontSize: _height / _width * smallTextFontSize);
     return Container(
-        decoration: whiteBorder.copyWith(
+        decoration: transparentBorder.copyWith(
             color: whiteColor,
             borderRadius: BorderRadius.circular(borderRadius + 1)),
         width: _width * .5,
-        margin: EdgeInsets.symmetric(
-            horizontal: _width * .01, vertical: _height * .01),
+        margin: EdgeInsets.symmetric(horizontal: _width * .01),
         child: Column(
           children: <Widget>[
             Container(
@@ -51,8 +52,6 @@ class RoundedImageContainer extends StatelessWidget {
                     ? CachedNetworkImage(
                         imageUrl: image,
                         placeholder: (context, url) => Center(child: Loading()),
-                        height: imageHeight,
-                        width: imageWidth,
                         fit: BoxFit.contain)
                     : Image(
                         height: imageHeight,
@@ -62,22 +61,38 @@ class RoundedImageContainer extends StatelessWidget {
                       ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: _width * .03, right: _width * .03, top: _height * .005),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(capitalizeFirstLetters(itemName), style: textStyle),
-                  Text(
-                    '$rupee' +
-                        itemPrice.toDouble().toString() +
-                        '/$itemQuantity',
-                    style: textStyle,
-                  ),
-                ],
-              ),
-            )
+            itemName == null
+                ? SizedBox.shrink()
+                : Padding(
+                    padding: EdgeInsets.only(
+                        left: _width * .03,
+                        right: _width * .03,
+                        top: _height * .005),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(capitalizeFirstLetters(itemName),
+                                style: textStyle),
+                            Text(
+                              '$rupee ${itemPrice.toDouble().toString()} /$itemQuantity',
+                              style: textStyle,
+                            ),
+                          ],
+                        ),
+                        discount == 0
+                            ? SizedBox.shrink()
+                            : Text(
+                                'upto $discount% offer per $itemQuantity',
+                                style: textStyle.copyWith(
+                                    color: errorColor,
+                                    fontWeight: FontWeight.bold),
+                              )
+                      ],
+                    ),
+                  )
           ],
         ));
   }

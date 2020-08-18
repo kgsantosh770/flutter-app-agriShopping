@@ -6,38 +6,57 @@ import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:intl/intl.dart';
 
-//Symbols
+// App name
+String appName = ". Agri .";
+
+// Symbols
 String rupee = "\u20B9";
 
-//Date Formats
-String formatter(date) => DateFormat('d MMMM yy').format(date);
+// Date Formats
+String dateFormatter(date) => DateFormat('dd MMMM yyyy').format(date);
+String getDayName(date) => DateFormat('EEEE').format(date);
 
-//constant sizes
+// Line strike thickness
+double strikeThickness = 1.8;
+
+// Constant border sizes
+double tinyBorderRadius = 6.0;
 double smallBorderRadius = 8.0;
+double normalBorderRadius = 10.0;
+double mediumBorderRadius = 12.0;
+double largeBorderRadius = 14.0;
+double extraLargeBorderRadius = 23.0;
+double circularBorderRadius = 25.0;
 
-//Font Size
-double tinyIconSize = 8;
+// Icon Size
+double tinyIconSize = 7;
 double smallIconSize = 11;
-double mediumIconSize = 14;
+double mediumIconSize = 15;
+double largeIconSize = 18;
+
+// Font Size
 double labelFontSize = 7.5;
 double smallTextFontSize = 7.0;
-double normalTextFontSize = 8.0;
-double mediumTextFontSize = 10.5;
-double largeTextFontSize = 12;
-double extraLargeFontSize = 16;
+double normalTextFontSize = 7.5;
+double mediumTextFontSize = 8.5;
+double largeTextFontSize = 11;
+double extraLargeFontSize = 13;
 
-//Icons
+// Icons
 IconData errorIconOutline = Icons.error_outline;
 IconData checkCircleOutline = Icons.check_circle_outline;
+IconData location = Icons.location_on;
 IconData iosArrowBack = Icons.arrow_back_ios;
 IconData arrowBack = Icons.arrow_back;
-IconData arrowDown = Icons.arrow_downward;
+IconData arrowDown = Icons.keyboard_arrow_down;
+IconData arrowUp = Icons.keyboard_arrow_up;
+IconData arrowDropUp = Icons.arrow_drop_up;
 IconData arrowDropDown = Icons.arrow_drop_down;
 IconData arrowForward = Icons.arrow_forward_ios;
 IconData search = Icons.search;
-IconData copyRights = Icons.copyright;
 IconData add = Icons.add;
 IconData remove = Icons.remove;
+IconData close = Icons.close;
 IconData tick = Icons.check;
 IconData delete = Icons.delete;
 IconData payment = Icons.payment;
@@ -45,9 +64,16 @@ IconData calender = Icons.date_range;
 IconData favorite = Icons.favorite;
 IconData favoriteOutline = Icons.favorite_border;
 IconData logout = Icons.exit_to_app;
-IconData help = Icons.help;
+IconData group = Icons.group;
 IconData person = Icons.person;
+IconData mail = Icons.mail;
 IconData edit = Icons.edit;
+IconData iphone = Icons.phone_iphone;
+IconData eyeOpen = Icons.visibility;
+IconData eyeClose = Icons.visibility_off;
+IconData lock = Icons.lock;
+IconData info = Icons.info;
+IconData creditCard = Icons.credit_card;
 
 //Material Design Icons
 IconData shoppingCart = MdiIcons.cartOutline;
@@ -55,7 +81,7 @@ IconData account = MdiIcons.accountCircle;
 IconData shoppingBag = MdiIcons.shopping;
 IconData cash = MdiIcons.cash;
 IconData address = MdiIcons.door;
-
+IconData cardScan = MdiIcons.creditCardSettings;
 //Colors
 Color blackColor = Colors.black;
 Color lightGreyColor = Colors.grey[200];
@@ -65,7 +91,7 @@ Color whiteColor = Colors.white;
 Color shadowColor = Color.fromARGB(255, 240, 235, 235);
 Color transparentColor = Colors.transparent;
 Color primaryColor = Colors.green[600];
-Color lightPrimaryColor = Color.fromARGB(255, 0, 230, 0);
+Color lightPrimaryColor = Color.fromARGB(255, 0, 220, 0);
 Color lightGreenColor = Colors.green[500];
 Color errorColor = Colors.red[800];
 Color linkColor = Colors.blueAccent;
@@ -86,15 +112,36 @@ String spices = "assets/media/images/spices.jpg";
 //Container Decorations
 BoxDecoration blackBorder = BoxDecoration(
     border: Border.all(color: blackColor),
-    borderRadius: BorderRadius.circular(8.0));
+    borderRadius: BorderRadius.circular(smallBorderRadius));
 BoxDecoration whiteBorder = BoxDecoration(
     border: Border.all(color: whiteColor),
-    borderRadius: BorderRadius.circular(8.0));
+    borderRadius: BorderRadius.circular(tinyBorderRadius));
 BoxDecoration primaryColorBorder = BoxDecoration(
     border: Border.all(color: primaryColor),
-    borderRadius: BorderRadius.circular(8.0));
+    borderRadius: BorderRadius.circular(tinyBorderRadius));
 BoxDecoration transparentBorder =
-    BoxDecoration(borderRadius: BorderRadius.circular(8.0));
+    BoxDecoration(borderRadius: BorderRadius.circular(tinyBorderRadius));
+BoxDecoration errorBorder = BoxDecoration(
+    borderRadius: BorderRadius.circular(tinyBorderRadius),
+    border: Border.all(color: errorColor));
+
+// Input Decoration
+InputDecoration inputDecoration(height, width) => InputDecoration(
+    contentPadding:
+        EdgeInsets.symmetric(vertical: height * .005, horizontal: width * .05),
+    errorStyle: TextStyle(color: transparentColor, height: 0),
+    filled: true,
+    fillColor: whiteColor,
+    errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: errorColor, width: width * .005),
+    ),
+    border: transparentInputBorder,
+    hintStyle: TextStyle(
+      fontSize: height / width * normalTextFontSize,
+    ));
+//Input Border
+OutlineInputBorder transparentInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(tinyBorderRadius)));
 //Functions
 bool validateEmail(String value) {
   Pattern pattern =
@@ -135,9 +182,9 @@ pullStreamElementToFront(List collectionNames, List querySnapshots,
   return querySnapshots;
 }
 
-String capitalizeFirstLetters(String text) {
+String capitalizeFirstLetters(String text, {String seperator}) {
   String splitter = text.contains('_') ? '_' : '-';
-  String separator = ' ';
+  String separator = seperator ?? ' ';
   List<String> words = text.split(splitter);
 
   for (var i = 0; i < words.length; i++) {
@@ -153,26 +200,26 @@ Future<bool> checkInternetConnection() async {
   return true;
 }
 
-Padding suggestionChip(
-    BuildContext context, double _height, double _width, String suggestionText,
-    [String navigationScreen]) {
-  return Padding(
-    padding: EdgeInsets.only(right: _width * .02),
-    child: GestureDetector(
-      onTap: () {
-        if (navigationScreen != null) {
-          Navigator.of(context).pushNamed(navigationScreen);
-        }
-      },
-      child: Text(capitalizeFirstLetters(suggestionText),
-          style: TextStyle(
-            color: whiteColor,
-            fontSize: _height / _width * normalTextFontSize,
-            fontFamily: 'Roboto-r',
-            fontWeight: FontWeight.bold,
-          )),
+RichText buildAddress(
+    double _height, double _width, String name, String shippingAddress) {
+  return RichText(
+      text: TextSpan(children: [
+    TextSpan(
+      text: '$name\n',
+      style: TextStyle(
+        color: blackColor,
+        fontWeight: FontWeight.bold,
+        fontSize: _height / _width * normalTextFontSize,
+      ),
     ),
-  );
+    TextSpan(
+      text: shippingAddress,
+      style: TextStyle(
+        color: blackColor,
+        fontSize: _height / _width * normalTextFontSize,
+      ),
+    ),
+  ]));
 }
 
 class VisaCardValidation {

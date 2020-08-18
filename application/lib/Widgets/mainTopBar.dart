@@ -1,10 +1,12 @@
-// import 'package:agri_shopping/services/auth.dart';
+import 'package:agri_shopping/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'cart.dart';
 import '../constants.dart';
 
-AppBar mainTopBar(BuildContext context, double _height, double _width,
-    {bool automaticallyImplyLeading = false}) {
+mainTopBar(BuildContext context,
+    {String uid, bool automaticallyImplyLeading = false}) {
+  final _height = MediaQuery.of(context).size.height;
+  final _width = MediaQuery.of(context).size.width;
   return AppBar(
     flexibleSpace: Container(
       decoration: BoxDecoration(
@@ -19,22 +21,21 @@ AppBar mainTopBar(BuildContext context, double _height, double _width,
       onTap: () {
         Navigator.of(context).pushNamed('homeScreen');
       },
-      child: Text('AGRI',
+      child: Text(appName,
           style: TextStyle(
-              color: whiteColor,
-              fontFamily: 'Akronim-r',
-              fontWeight: FontWeight.bold,
-              fontSize: _height / _width * extraLargeFontSize,
-              letterSpacing: 3.5)),
+            color: whiteColor,
+            fontFamily: 'Oleo',
+            fontWeight: FontWeight.bold,
+            fontSize: _height / _width * extraLargeFontSize,
+          )),
     ),
     iconTheme: IconThemeData(
         color: whiteColor, size: _height / _width * mediumIconSize),
     actions: <Widget>[
-      // ignore: missing_required_param
       IconButton(
-        // onPressed: () async {
-        // await AuthService().signOut();
-        // },
+        onPressed: () async {
+          await AuthService().signOut();
+        },
         icon: Icon(
           search,
           size: _height / _width * mediumIconSize,
@@ -43,7 +44,9 @@ AppBar mainTopBar(BuildContext context, double _height, double _width,
       ),
       IconButton(
         onPressed: () {
-          Cart(context, _height, _width).openCart();
+          uid == null
+              ? Navigator.of(context).pushNamed('signInScreen')
+              : Cart(context, uid).openCart();
         },
         icon: Icon(
           shoppingCart,

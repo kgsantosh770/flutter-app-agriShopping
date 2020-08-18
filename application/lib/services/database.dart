@@ -12,28 +12,31 @@ class DatabaseService {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  Future setUserData(String name, String email) async {
+  Future setUserData(String name,
+      {String email, String countryCode, String phoneNumber}) async {
     try {
       await userCollection.document(uid).setData({
         'name': name,
-        'email': email,
-        'phone': '',
-        'location': '',
-        'primary_address': '',
-        'secondary_address': '',
-        'temporary_address': '',
+        'email': email != null ? email : '',
+        'cart': {'total': 0, 'total_with_discount': 0, 'order': []},
+        'phone': phoneNumber != null
+            ? {
+                'country_code': countryCode,
+                'phone_number': phoneNumber,
+              }
+            : '',
+        'default_address': {
+          'state': '',
+          'country': '',
+          'area': '',
+          'city': '',
+          'house_number': '',
+          'landmark': '',
+          'mobile_number': '',
+          'name': '',
+          'pincode': '',
+        },
       });
-      List<String> docNames = ['cart', 'favorites'];
-      for (var i = 0; i < 2; i++) {
-        DocumentReference docRef = userCollection
-            .document(uid)
-            .collection('user_items')
-            .document(docNames[i]);
-        Firestore.instance.runTransaction((transaction) async {
-          await transaction.set(docRef, {'total_items': 0});
-        });
-        print('round $i success');
-      }
       return 'success';
     } catch (e) {
       print(e.toString());
@@ -41,7 +44,7 @@ class DatabaseService {
     }
   }
 
-  Future updateUserData(Map<String, dynamic> data) async {
+  Future updateUserData(data) async {
     try {
       return await userCollection.document(uid).updateData(data);
     } catch (e) {
@@ -50,27 +53,53 @@ class DatabaseService {
     }
   }
 
-  Future addToCart(String itemCategory, String itemDocId) async {
+  Future updateStaticOrderData(data) async {
     try {
-      DocumentReference itemDocRef =
-          Firestore.instance.collection(itemCategory).document(itemDocId);
-      CollectionReference cartCollection =
-          userCollection.document(uid).collection('user_items');
-      int currentCartItems;
-      await cartCollection.getDocuments().then((value) async {
-        currentCartItems = value.documents[0].data['total_items'];
+      return await userCollection.document('static_datas').updateData(data);
+    } catch (e) {
+      print(e.toString());
+      return "Error saving changes.";
+    }
+  }
+
+  Future addProduct(
+      {String to, String path, String itemDocId, double quantity}) async {
+    try {
+      var total, totalWithDiscount;
+      DocumentReference itemDocRef = Firestore.instance.document(path);
+      Map<String, dynamic> toData;
+      DocumentReference userData = userCollection.document(uid);
+      await userData.get().then((value) {
+        toData = value.data[to];
       });
-      currentCartItems = currentCartItems + 1;
-      DocumentReference cartDocRef = userCollection
-          .document(uid)
-          .collection('user_items')
-          .document('cart');
-      await Firestore.instance.runTransaction((transaction) async {
-        await transaction.update(cartDocRef, {
-          '$itemDocId': itemDocRef,
-          'total_items': currentCartItems,
+      if (to == 'cart') {
+        await itemDocRef.get().then((value) {
+          total = (toData['total'] + (quantity * value.data['mrp']));
+          totalWithDiscount = double.parse((toData['total_with_discount'] +
+                  (quantity *
+                      (value.data['mrp'] -
+                          (value.data['mrp'] *
+                              (value.data['discount_percent'] / 100)))))
+              .toStringAsFixed(2));
         });
-      });
+      }
+      if (to == 'favorites') {
+        toData[itemDocId] = itemDocRef;
+      } else {
+        List order = toData['order'];
+        order.add(itemDocId);
+        toData[itemDocId] = {
+          'quantity': quantity,
+          'document_reference': itemDocRef,
+        };
+        toData['total'] = total;
+        toData['total_with_discount'] = totalWithDiscount;
+        toData['order'] = order;
+      }
+      Map<String, dynamic> updatedData = {
+        to: toData,
+      };
+      await updateUserData(updatedData);
       return 'success';
     } catch (e) {
       print(e.toString());
@@ -78,25 +107,37 @@ class DatabaseService {
     }
   }
 
-  Future removeFromCart(String itemCategory, String itemDocId) async {
+  Future removeProduct({String from, String path, String itemDocId}) async {
     try {
-      CollectionReference cartCollection =
-          userCollection.document(uid).collection('user_items');
-      int currentCartItems;
-      await cartCollection.getDocuments().then((value) async {
-        currentCartItems = value.documents[0].data['total_items'];
+      var itemPrice, itemDiscount, itemQuantity;
+      List order;
+      Map<String, dynamic> fromData;
+      DocumentReference userData = userCollection.document(uid);
+      await userData.get().then((value) {
+        fromData = value.data[from];
       });
-      currentCartItems = currentCartItems - 1;
-      DocumentReference cartDocRef = userCollection
-          .document(uid)
-          .collection('user_items')
-          .document('cart');
-      await Firestore.instance.runTransaction((transaction) async {
-        await transaction.update(cartDocRef, {
-          '$itemDocId': FieldValue.delete(),
-          'total_items': currentCartItems,
+      if (from == 'cart') {
+        DocumentReference itemDocRef = Firestore.instance.document(path);
+        await itemDocRef.get().then((value) {
+          itemPrice = value.data['mrp'];
+          itemDiscount = value.data['discount_percent'];
         });
-      });
+        itemQuantity = fromData[itemDocId]['quantity'];
+        order = fromData['order'];
+        order.remove(itemDocId);
+        fromData['total'] = fromData['total'] - (itemQuantity * itemPrice);
+        fromData['total_with_discount'] = double.parse(
+            (fromData['total_with_discount'] -
+                    (itemQuantity *
+                        (itemPrice - (itemPrice * (itemDiscount / 100)))))
+                .toStringAsFixed(2));
+        fromData['order'] = order;
+      }
+      fromData.remove(itemDocId);
+      Map<String, dynamic> updatedData = {
+        from: fromData,
+      };
+      await updateUserData(updatedData);
       return 'success';
     } catch (e) {
       print(e.toString());
@@ -104,54 +145,26 @@ class DatabaseService {
     }
   }
 
-  Future addToFavorites(String itemCategory, String itemDocId) async {
+  Future changeCartQuantity(
+      String item, var price, double discountPrice, double quantity) async {
     try {
-      DocumentReference itemDocRef =
-          Firestore.instance.collection(itemCategory).document(itemDocId);
-      CollectionReference favoriteCollection =
-          userCollection.document(uid).collection('user_items');
-      int currentFavoriteItems;
-      await favoriteCollection.getDocuments().then((value) async {
-        currentFavoriteItems = value.documents[1].data['total_items'];
+      Map<String, dynamic> cartData;
+      DocumentReference userData = userCollection.document(uid);
+      await userData.get().then((value) {
+        cartData = value.data['cart'];
       });
-      currentFavoriteItems = currentFavoriteItems + 1;
-      DocumentReference favoriteDocRef = userCollection
-          .document(uid)
-          .collection('user_items')
-          .document('favorite');
-      await Firestore.instance.runTransaction((transaction) async {
-        await transaction.update(favoriteDocRef, {
-          '$itemDocId': itemDocRef,
-          'total_items': currentFavoriteItems,
-        });
-      });
-      return 'success';
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  Future removeFromFavorite(String itemCategory, String itemDocId) async {
-    try {
-      CollectionReference favoriteCollection =
-          userCollection.document(uid).collection('user_items');
-      int currentFavoriteItems;
-      await favoriteCollection.getDocuments().then((value) async {
-        currentFavoriteItems = value.documents[1].data['total_items'];
-      });
-      currentFavoriteItems = currentFavoriteItems - 1;
-      DocumentReference favoriteDocRef = userCollection
-          .document(uid)
-          .collection('user_items')
-          .document('favorite');
-      await Firestore.instance.runTransaction((transaction) async {
-        await transaction.update(favoriteDocRef, {
-          '$itemDocId': FieldValue.delete(),
-          'total_items': currentFavoriteItems,
-        });
-      });
-      return 'success';
+      if (cartData[item]['quantity'] > quantity) {
+        cartData['total'] = cartData['total'] - price;
+        cartData['total_with_discount'] =
+            cartData['total_with_discount'] - discountPrice;
+      } else {
+        cartData['total'] = cartData['total'] + price;
+        cartData['total_with_discount'] =
+            cartData['total_with_discount'] + discountPrice;
+      }
+      cartData[item]['quantity'] = quantity;
+      await updateUserData({'cart': cartData});
+      return 'quantity change success';
     } catch (e) {
       print(e.toString());
       return null;
@@ -170,22 +183,6 @@ class DatabaseService {
 
   Stream<DocumentSnapshot> get staticData {
     return userCollection.document('static_datas').snapshots();
-  }
-
-  Stream<DocumentSnapshot> get userCartData {
-    return userCollection
-        .document(uid)
-        .collection('user_items')
-        .document('cart')
-        .snapshots();
-  }
-
-  Stream<DocumentSnapshot> get userFavoriteData {
-    return userCollection
-        .document(uid)
-        .collection('user_items')
-        .document('favorite')
-        .snapshots();
   }
 
   // Futures and streams to extract data from firebase

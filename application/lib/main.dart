@@ -1,10 +1,14 @@
+import 'package:agri_shopping/Screens/aboutUsScreen.dart';
+import 'package:agri_shopping/Screens/contactUsScreen.dart';
+import 'package:agri_shopping/Screens/donateScreen.dart';
 import 'package:agri_shopping/Screens/landingScreen.dart';
 import 'package:agri_shopping/Screens/orderScreen.dart';
+import 'package:agri_shopping/Screens/otpScreen.dart';
 import 'package:agri_shopping/Screens/productScreen.dart';
-import 'package:agri_shopping/Screens/settings/addressScreen.dart';
-import 'package:agri_shopping/Screens/settings/editProfile.dart';
+import 'package:agri_shopping/Screens/addressScreen.dart';
+import 'package:agri_shopping/Screens/editProfile.dart';
 import 'package:agri_shopping/Screens/singleProductScreen.dart';
-import 'package:agri_shopping/Screens/settings/settingsScreen.dart';
+import 'package:agri_shopping/Screens/settingsScreen.dart';
 import 'package:agri_shopping/Screens/tickScreen.dart';
 import 'package:agri_shopping/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +50,10 @@ class MyApp extends StatelessWidget {
           'tickScreen': (context) => Tick(),
           'orderScreen': (context) => Order(),
           'addressScreen': (context) => Address(),
+          'otpScreen': (context) => Otp(),
+          'aboutUsScreen': (context) => AboutUs(),
+          'contactUsScreen': (context) => ContactUs(),
+          'donateScreen': (context) => Donate(),
         },
         theme: ThemeData(
             iconTheme: IconThemeData(color: whiteColor),

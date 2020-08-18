@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
-topBar(BuildContext context, double height, double width,
-    {Widget child1, Widget child2}) {
+topBar(BuildContext context, {Widget child1, Widget child2}) {
+  final _height = MediaQuery.of(context).size.height;
+  final _width = MediaQuery.of(context).size.width;
   return AppBar(
       flexibleSpace: Container(
         decoration: BoxDecoration(
@@ -21,12 +22,12 @@ topBar(BuildContext context, double height, double width,
         onTap: () {
           Navigator.of(context).pushNamed('homeScreen');
         },
-        child: Text('AGRI',
+        child: Text(appName,
             style: TextStyle(
-                color: whiteColor,
-                fontFamily: 'Akronim-r',
-                fontWeight: FontWeight.bold,
-                fontSize: height / width * 16,
-                letterSpacing: 3.5)),
+              color: whiteColor,
+              fontFamily: 'Oleo',
+              fontWeight: FontWeight.bold,
+              fontSize: _height / _width * extraLargeFontSize,
+            )),
       ));
 }
