@@ -1,38 +1,28 @@
-<html>
+# Agri Shopping 
 
-<body>
-<h1>MobileApplication</h1>
+Agri shopping is an application created using <b>Flutter SDK</b>.
 
-A mobile application created using **Flutter**.
-
-<h2>Motive:</h2>
+## Motive
 
 To connect farmers and civilians with a single intermediate, for the purpose of providing reasonable price for their productions.
 
-<h2>Note:</h2>
+## Firebase Integration
 
-  You can't run this project, because I have'nt provided all the files to this repository.If you are interested in this project, contact me.
-  Mobile: +918825840570
+This application is integrated with cloud firestore (firebase). Every data of the application is stored in the real time database in cloud firestore. User authentication is also dealt with firebase authentication.
 
-<h2>UI Samples:</h2>
+## UI Samples
 <img height=670 width=350 alt="signin screen" src="/Ui samples/2. Sign in.png"/>
 <img height=670 width=350 alt="home screen" src="/Ui samples/3. Home Screen.png"/>
 
-<br>
-<h2>Firebase Integration:</h2>
+## Team Members
 
-  This application is integrated with cloud firestore (firebase). Every data of the application is stored in the real time database in cloud firestore. User authentication is also dealt with firebase authentication.
+#### Lead Developer			
+- K.G.Santosh		
+				
+#### Developers
+- S.Santhosh Kumar
+- C.M.Akash
+- S.Siddarth
 
-<h2>Team Members:</h2>
-
-<ul>
-	<li>Santosh</li>
-	<li>Akash</li>
-	<li>Sabhari</li>
-	<li>Santhosh Kumar</li>
-	<li>Sidhart</li>
-</ul>	
-
-
-</body>
-</html>
+#### Contributor
+- A.M.Sabhari
